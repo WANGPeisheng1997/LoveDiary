@@ -26,6 +26,10 @@
   <link rel="stylesheet" href="../static/bower_components/select2/dist/css/select2.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../static/dist/css/AdminLTE.min.css">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="../static/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../static/dist/css/AdminLTE.min.css">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="../static/dist/css/skins/_all-skins.min.css">
@@ -158,117 +162,207 @@
     <!-- Main content -->
     <section class="content">
 
-      <!-- THE RECORD EXAMPLE -->
-	  <div class="col-lg-5">
-		
-          <div class="box box-solid box-danger">
-              <div class="box-header with-border">
-                  <h3 class="box-title">Add record</h3>
-                  <div class="box-tools pull-right">
-                      <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                      <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
-                  </div>
-              </div>
-              <!-- /.box-header -->
+		 <!-- Show accounts -->
+		 <div class="row">
+		  <div class="col-lg-10">	
+			  <div class="box box-solid box-danger">
+				<div class="box-header with-border">
+				  <h3 class="box-title">All accounts recorded</h3>
+				</div>
+				<!-- /.box-header -->
+				<div class="box-body">
+				  <table id="account_table" class="table table-bordered table-striped">
+					<thead>
+					<tr>
+					  <th>Account id</th>
+					  <th>Date</th>
+					  <th>Time</th>
+					  <th>Description</th>
+					  <th>Cost</th>
+					  <th>Spender</th>
+					  <th>Type</th>
+					</tr>
+					</thead>
+					
+					<tbody>
+					
+					{%for account in account_list%}
+                    <tr>
+						{%for item in account%}
+						<td>{{item}}</td>
+						{%endfor%}
+                    </tr>
+                    {%endfor%}
+					
+					</tbody>
+					
+					<tfoot>
+					<tr>
+					  <th>Account id</th>
+					  <th>Date</th>
+					  <th>Time</th>
+					  <th>Description</th>
+					  <th>Cost</th>
+					  <th>Spender</th>
+					  <th>Type</th>
+					</tr>
+					</tfoot>
+				  </table>
+				</div>
+				<!-- /.box-body -->
+			  </div>
+			  <!-- /.box -->
+		  </div>
+		 </div>
+	 
+		 
+		 <div class="row">
+		  <!-- Add an account -->
+		  <div class="col-lg-5">
+			
+			  <div class="box box-solid box-danger">
+				  <div class="box-header with-border">
+					  <h3 class="box-title">Add an account</h3>
+				  </div>
+				  <!-- /.box-header -->
 
-              <form class="form-horizontal" action="/moneymanagement" method="post">
+				  <form class="form-horizontal" action="/moneymanagement/add" method="post">
 
-                  <div class="box-body">
+					  <div class="box-body">
 
-                      <div class="col-md-12">
+						  <div class="col-md-12">
 
-                          <!-- text input -->
-                          <div class="form-group">
-                              <label>Description:</label>
-                              <input name="description" type="text" class="form-control" placeholder="Where & Why">
-                          </div>
-                          <!-- /.form group -->
-                          <!-- money input -->
-                          <div class="form-group">
-                              <label>Cost:</label>
-                              <input name="cost" type="number" step="0.01" class="form-control" placeholder="Eg: 3.00">
-                          </div>
-                          <!-- /.form group -->
-                          <!-- radio -->
+							  <!-- text input -->
+							  <div class="form-group">
+								  <label>Description:</label>
+								  <input name="description" type="text" class="form-control" placeholder="Where & Why">
+							  </div>
+							  <!-- /.form group -->
+							  <!-- money input -->
+							  <div class="form-group">
+								  <label>Cost:</label>
+								  <input name="cost" type="number" step="0.01" class="form-control" placeholder="Eg: 3.00">
+							  </div>
+							  <!-- /.form group -->
+							  <!-- radio -->
 
-                          <div class="form-group">
-                              <label>Spender:</label>
+							  <div class="form-group">
+								  <label>Spender:</label>
 
-                              <div class="radio">
-                                  <label>
-                                      <input type="radio" name="spender" id="optionsRadios1" value="1" checked>
-                                      &nbsp WPS &nbsp
-                                  </label>
-                              </div>
+								  <div class="radio">
+									  <label>
+										  <input type="radio" name="spender" id="optionsRadios1" value="1" checked>
+										  &nbsp WPS &nbsp
+									  </label>
+								  </div>
 
-                              <div class="radio">
-                                  <label>
-                                      <input type="radio" name="spender" id="optionsRadios2" value="2">
-                                      &nbsp Sweetie &nbsp
-                                  </label>
-                              </div>
+								  <div class="radio">
+									  <label>
+										  <input type="radio" name="spender" id="optionsRadios2" value="2">
+										  &nbsp Sweetie &nbsp
+									  </label>
+								  </div>
 
 
-                          </div>
+							  </div>
 
-                          <!-- Date -->
-                          <div class="form-group">
-                              <label>Date:</label>
-                              <div class="input-group date">
-                                  <div class="input-group-addon">
-                                      <i class="fa fa-calendar"></i>
-                                  </div>
-                                  <input name="date" type="text" class="form-control pull-right" id="datepicker">
-                              </div>
-                              <!-- /.input group -->
-                          </div>
-                          <!-- /.form group -->
-                          <!-- time Picker -->
-                          <div class="bootstrap-timepicker">
-                              <div class="form-group">
-                                  <label>Time:</label>
-                                  <div class="input-group">
-                                      <input name="time" type="text" class="form-control timepicker">
-                                      <div class="input-group-addon">
-                                          <i class="fa fa-clock-o"></i>
-                                      </div>
-                                  </div>
-                                  <!-- /.input group -->
-                              </div>
-                              <!-- /.form group -->
-                          </div>
+							  <!-- Date -->
+							  <div class="form-group">
+								  <label>Date:</label>
+								  <div class="input-group date">
+									  <div class="input-group-addon">
+										  <i class="fa fa-calendar"></i>
+									  </div>
+									  <input name="date" type="text" class="form-control pull-right" id="datepicker">
+								  </div>
+								  <!-- /.input group -->
+							  </div>
+							  <!-- /.form group -->
+							  <!-- time Picker -->
+							  <div class="bootstrap-timepicker">
+								  <div class="form-group">
+									  <label>Time:</label>
+									  <div class="input-group">
+										  <input name="time" type="text" class="form-control timepicker">
+										  <div class="input-group-addon">
+											  <i class="fa fa-clock-o"></i>
+										  </div>
+									  </div>
+									  <!-- /.input group -->
+								  </div>
+								  <!-- /.form group -->
+							  </div>
 
-                          <!-- Type -->
-                          <div class="form-group">
-                              <label>Type</label>
-                              <select name="type" class="form-control select2" style="width: 100%;">
-                                  <option value="1" selected="selected">Food & Beverage</option>
-                                  <option value="2">Traffic</option>
-                              </select>
-                          </div>
-                          <!-- /.form-group -->
+							  <!-- Type -->
+							  <div class="form-group">
+								  <label>Type</label>
+								  <select name="type" class="form-control select2" style="width: 100%;">
+									  <option value="1" selected="selected">Food & Beverage</option>
+									  <option value="2">Traffic</option>
+								  </select>
+							  </div>
+							  <!-- /.form-group -->
 
-                      </div>
+						  </div>
 
-                  </div>
-                  <!-- /.box-body -->
+					  </div>
+					  <!-- /.box-body -->
 
-                  <div class="box-footer">
-                      <button type="button" class="btn btn-default">Reset</button>
-                      <button type="submit" class="btn btn-info pull-right">Submit</button>
-                  </div>
-                  <!-- /.box-footer -->
+					  <div class="box-footer">
+						  <button type="reset" class="btn btn-default">Reset</button>
+						  <button type="submit" class="btn btn-info pull-right">Submit</button>
+					  </div>
+					  <!-- /.box-footer -->
 
-              </form>
-              <!-- /.form -->
+				  </form>
+				  <!-- /.form -->
 
-          </div>
-		  <!-- /.box -->
-	   </div>
+			  </div>
+			  <!-- /.box -->
+		  </div>
+		 
+		  <!-- Delete an account -->
+		  <div class="col-lg-5">
+			
+			  <div class="box box-solid box-danger">
+				  <div class="box-header with-border">
+					  <h3 class="box-title">Delete an account</h3>
+				  </div>
+				  <!-- /.box-header -->
 
-      
-      
+				  <form class="form-horizontal" action="/moneymanagement/delete" method="post">
 
+					  <div class="box-body">
+
+						  <div class="col-md-12">
+
+							  <!-- text input -->
+							  <div class="form-group">
+								  <label>Account id:</label>
+								  <input name="accountid" type="text" class="form-control" placeholder="Input the account id of which you want to delete">
+							  </div>
+							  <!-- /.form group -->
+
+						  </div>
+
+					  </div>
+					  <!-- /.box-body -->
+
+					  <div class="box-footer">
+						  <button type="reset" class="btn btn-default">Reset</button>
+						  <button type="submit" class="btn btn-info pull-right">Delete</button>
+					  </div>
+					  <!-- /.box-footer -->
+
+				  </form>
+				  <!-- /.form -->
+
+			  </div>
+			  <!-- /.box -->
+		  </div>
+		 
+		 </div>
+	 
     </section>
     <!-- /.content -->
   </div>
@@ -296,6 +390,9 @@
 <script src="../static/bower_components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="../static/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- DataTables -->
+<script src="../static/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="../static/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 <!-- Select2 -->
 <script src="../static/bower_components/select2/dist/js/select2.full.min.js"></script>
 <!-- InputMask -->
@@ -388,6 +485,12 @@
       showInputs: false
     })
   })
+  
+ $(function () {
+    $('#account_table').DataTable()
+  })
 </script>
 </body>
 </html>
+
+

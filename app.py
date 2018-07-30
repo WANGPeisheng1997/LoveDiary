@@ -14,18 +14,28 @@ def index():
 
 @app.route('/moneymanagement', methods=['GET'])
 def money_management():
-    return render_template('moneymanagement.html')
+    accounts = DatabaseConnection.exec_fetch_all_accounts()
+    print(accounts)
+    return render_template('moneymanagement.html', account_list=accounts)
 
 
-@app.route('/moneymanagement', methods=['POST'])
-def add_form():
-    description = request.form['description']
-    cost = request.form['cost']
-    spenderid = request.form['spender']
-    date = request.form['date']
-    time = request.form['time']
-    typeid = request.form['type']
-    DatabaseConnection.exec_add_account(description, cost, spenderid, date_web_to_sql(date), time_web_to_sql(time), typeid)
+@app.route('/moneymanagement/<post_type>', methods=['POST'])
+def process_form_post(post_type=None):
+
+    if post_type == "add":
+        description = request.form['description']
+        cost = request.form['cost']
+        spenderid = request.form['spender']
+        date = request.form['date']
+        time = request.form['time']
+        typeid = request.form['type']
+        DatabaseConnection.exec_add_account(description, cost, spenderid, date_web_to_sql(date), time_web_to_sql(time),
+                                            typeid)
+
+    if post_type == "delete":
+        accountid = int(request.form['accountid'])
+        DatabaseConnection.exec_delete_account(accountid)
+
     return redirect('/moneymanagement')
 
 
