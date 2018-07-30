@@ -296,9 +296,14 @@
 							  <!-- Type -->
 							  <div class="form-group">
 								  <label>Type</label>
+
+
 								  <select name="type" class="form-control select2" style="width: 100%;">
-									  <option value="1" selected="selected">Food & Beverage</option>
-									  <option value="2">Traffic</option>
+
+									  {%for type in type_list%}
+									  <option value={{type[0]}}>{{type[1]}}</option>
+									  {%endfor%}
+
 								  </select>
 							  </div>
 							  <!-- /.form-group -->
