@@ -19,10 +19,11 @@ def money_management():
     DatabaseConnection.database.connect_database()
     accounts = DatabaseConnection.exec_fetch_all_accounts()
     types = DatabaseConnection.exec_fetch_all_types()
+    spenders = DatabaseConnection.exec_fetch_all_spenders()
     DatabaseConnection.database.disconnect_database()
     end = time.clock()
     print("Load Time: " + str(end-start) + "s")
-    return render_template('moneymanagement.html', account_list=accounts, type_list=types)
+    return render_template('moneymanagement.html', account_list=accounts, type_list=types, spender_list=spenders)
 
 
 @app.route('/moneymanagement/<post_type>', methods=['POST'])

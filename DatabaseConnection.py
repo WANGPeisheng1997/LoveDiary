@@ -31,7 +31,13 @@ class Connection(object):
 
 database = Connection()
 
-# add a new account:
+def exec_add_spender(name):
+    sql = "INSERT INTO spender(spender_name) " \
+          "VALUES('%s')"
+    database.exec_update(sql % name)
+
+
+# def exec_change_spender_name(spender_id, new_name):
 
 
 def exec_add_account(description, cost, spenderid, date, time, typeid):
@@ -60,6 +66,13 @@ def exec_fetch_all_types():
     database.exec_query(sql)
     type_list = database.fetch_cursor()
     return type_list
+
+
+def exec_fetch_all_spenders():
+    sql = "SELECT * FROM spender"
+    database.exec_query(sql)
+    spender_list = database.fetch_cursor()
+    return spender_list
 
 
 # def exec_query_spender_from_id(spender_id):

@@ -249,20 +249,14 @@
 							  <div class="form-group">
 								  <label>Spender:</label>
 
+								  {%for spender in spender_list%}
 								  <div class="radio">
 									  <label>
-										  <input type="radio" name="spender" id="optionsRadios1" value="1" checked>
-										  &nbsp WPS &nbsp
+										  <input type="radio" name="spender" value={{spender[0]}}>
+										  &nbsp {{spender[1]}} &nbsp
 									  </label>
 								  </div>
-
-								  <div class="radio">
-									  <label>
-										  <input type="radio" name="spender" id="optionsRadios2" value="2">
-										  &nbsp Sweetie &nbsp
-									  </label>
-								  </div>
-
+								  {%endfor%}
 
 							  </div>
 
