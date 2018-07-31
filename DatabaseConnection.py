@@ -1,21 +1,16 @@
 # -*-coding:utf-8-*-
 import pymysql
-from datetime import datetime
-import time
-
-# mysql -h sh-cdb-hpgxwiuk.sql.tencentcdb.com -P 62958 -u root -p
-local_host = "localhost"
-remote_host = "sh-cdb-hpgxwiuk.sql.tencentcdb.com"
+import dbconfig
 
 
 class Connection(object):
     def connect_database(self):
-        self.connection = pymysql.connect(host=remote_host,
-                                          user='root',
-                                          db='lovediarydb',
-                                          passwd='wangpeisheng17',
-                                          port=62958,
-                                          charset="utf8"
+        self.connection = pymysql.connect(host=dbconfig.host,
+                                          user=dbconfig.user,
+                                          db=dbconfig.db,
+                                          passwd=dbconfig.passwd,
+                                          port=dbconfig.port,
+                                          charset=dbconfig.charset
                                           )
         self.cursor = self.connection.cursor()
 
