@@ -217,9 +217,10 @@
 	 
 		 
 		 <div class="row">
-		  <!-- Add an account -->
+		  <!-- Add or delete an account -->
 		  <div class="col-lg-5">
-			
+
+			  <!-- Add an account -->
 			  <div class="box box-solid box-danger">
 				  <div class="box-header with-border">
 					  <h3 class="box-title">Add an account</h3>
@@ -318,11 +319,8 @@
 
 			  </div>
 			  <!-- /.box -->
-		  </div>
-		 
-		  <!-- Delete an account -->
-		  <div class="col-lg-5">
-			
+
+			  <!-- Delete an account -->
 			  <div class="box box-solid box-danger">
 				  <div class="box-header with-border">
 					  <h3 class="box-title">Delete an account</h3>
@@ -358,9 +356,126 @@
 
 			  </div>
 			  <!-- /.box -->
+
 		  </div>
+		  <!-- Add or delete an account -->
 		 
+		  <!-- Edit an account -->
+		  <div class="col-lg-5">
+
+			  <div class="box box-solid box-danger">
+				  <div class="box-header with-border">
+					  <h3 class="box-title">Edit an account</h3>
+				  </div>
+				  <!-- /.box-header -->
+
+				  <form class="form-horizontal" action="/moneymanagement/edit" method="post">
+
+					  <div class="box-body">
+
+						  <div class="col-md-12">
+
+							  <!-- text input -->
+							  <div class="form-group">
+								  <label>Account id:</label>
+								  <input name="accountid" type="text" class="form-control" placeholder="Input the account id of which you want to edit">
+							  </div>
+							  <!-- /.form group -->
+
+							  <!-- text input -->
+							  <div class="form-group">
+								  <label>Description:</label>
+								  <input name="description" type="text" class="form-control" placeholder="Where & Why">
+							  </div>
+							  <!-- /.form group -->
+
+							  <!-- money input -->
+							  <div class="form-group">
+								  <label>Cost:</label>
+								  <input name="cost" type="number" step="0.01" class="form-control" placeholder="Eg: 3.00">
+							  </div>
+							  <!-- /.form group -->
+
+							  <!-- radio -->
+
+							  <div class="form-group">
+								  <label>Spender:</label>
+
+								  {%for spender in spender_list%}
+								  <div class="radio">
+									  <label>
+										  <input type="radio" name="spender" value={{spender[0]}}>
+										  &nbsp {{spender[1]}} &nbsp
+									  </label>
+								  </div>
+								  {%endfor%}
+
+							  </div>
+
+							  <!-- Date -->
+							  <div class="form-group">
+								  <label>Date:</label>
+								  <div class="input-group date">
+									  <div class="input-group-addon">
+										  <i class="fa fa-calendar"></i>
+									  </div>
+									  <input name="date" type="text" class="form-control pull-right" id="datepicker">
+								  </div>
+								  <!-- /.input group -->
+							  </div>
+							  <!-- /.form group -->
+							  <!-- time Picker -->
+							  <div class="bootstrap-timepicker">
+								  <div class="form-group">
+									  <label>Time:</label>
+									  <div class="input-group">
+										  <input name="time" type="text" class="form-control timepicker">
+										  <div class="input-group-addon">
+											  <i class="fa fa-clock-o"></i>
+										  </div>
+									  </div>
+									  <!-- /.input group -->
+								  </div>
+								  <!-- /.form group -->
+							  </div>
+
+							  <!-- Type -->
+							  <div class="form-group">
+								  <label>Type</label>
+
+
+								  <select name="type" class="form-control select2" style="width: 100%;">
+
+									  {%for type in type_list%}
+									  <option value={{type[0]}}>{{type[1]}}</option>
+									  {%endfor%}
+
+								  </select>
+							  </div>
+							  <!-- /.form-group -->
+
+						  </div>
+
+					  </div>
+					  <!-- /.box-body -->
+
+					  <div class="box-footer">
+						  <button type="reset" class="btn btn-default">Reset</button>
+						  <button type="submit" class="btn btn-info pull-right">Submit</button>
+					  </div>
+					  <!-- /.box-footer -->
+
+				  </form>
+				  <!-- /.form -->
+
+			  </div>
+			  <!-- /.box -->
+
+		  </div>
+		  <!-- Edit an account -->
+
 		 </div>
+
 	 
     </section>
     <!-- /.content -->
