@@ -25,6 +25,7 @@ create table account
 (
    account_id            int not null auto_increment,
    account_description   text not null,
+   account_currency      text not null,
    account_cost          decimal(10,2) not null,
    account_spenderid     int not null,
    account_date          date not null,
@@ -36,14 +37,15 @@ create table account
 );
 
 insert into spender(spender_name) values ("WPS");
-insert into spender(spender_name) values ("Sweetie");
+insert into spender(spender_name) values ("FXT");
+insert into spender(spender_name) values ("GDM");
+insert into spender(spender_name) values ("ZYF");
 
-insert into account_type(type_name) values ("Food & Beverages");
+insert into account_type(type_name) values ("Food & Beverage");
+insert into account_type(type_name) values ("Room Charge");
 insert into account_type(type_name) values ("Traffic");
+insert into account_type(type_name) values ("Entertainment");
 insert into account_type(type_name) values ("Shopping");
 insert into account_type(type_name) values ("Clothing");
 insert into account_type(type_name) values ("Household Items");
-insert into account_type(type_name) values ("Entertainment");
-insert into account_type(type_name) values ("Room Charge");
-insert into account_type(type_name) values ("Travel");
 insert into account_type(type_name) values ("Others");

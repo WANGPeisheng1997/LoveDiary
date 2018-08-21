@@ -13,6 +13,21 @@ def index():
     return redirect('/moneymanagement')
 
 
+@app.route('/japan/accounting', methods=['GET'])
+def japan_accounting():
+    return render_template('japan_accounting.html')
+
+
+@app.route('/japan/schedule', methods=['GET'])
+def japan_schedule():
+    return render_template('japan_schedule.html')
+
+
+@app.route('/japan/schedule', methods=['GET'])
+def japan_maps():
+    return render_template('japan_maps.html')
+
+
 @app.route('/moneymanagement', methods=['GET'])
 def money_management():
     start = time.clock()
@@ -67,7 +82,7 @@ def time_sql_to_web(date):
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host="0.0.0.0")
+    app.run(debug=True)
     # print(date_web_to_sql("7/16/2015"))
     # print(date_sql_to_web("2015-07-03"))
     # print(time_web_to_sql("7:03 PM"))
