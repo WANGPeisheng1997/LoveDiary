@@ -227,7 +227,7 @@
 				  </div>
 				  <!-- /.box-header -->
 
-				  <form class="form-horizontal" action="/moneymanagement/add" method="post">
+				  <form class="form-horizontal" action="/moneymanagement/add" method="post" autocomplete="off">
 
 					  <div class="box-body">
 
@@ -235,20 +235,20 @@
 
 							  <!-- text input -->
 							  <div class="form-group">
-								  <label>Description:</label>
+								  <label>Description: <font color="#FF0000">*</font></label>
 								  <input name="description" type="text" class="form-control" placeholder="Where & Why">
 							  </div>
 							  <!-- /.form group -->
 							  <!-- money input -->
 							  <div class="form-group">
-								  <label>Cost:</label>
+								  <label>Cost: <font color="#FF0000">*</font></label>
 								  <input name="cost" type="number" step="0.01" class="form-control" placeholder="Eg: 3.00">
 							  </div>
 							  <!-- /.form group -->
 							  <!-- radio -->
 
 							  <div class="form-group">
-								  <label>Spender:</label>
+								  <label>Spender: <font color="#FF0000">*</font></label>
 
 								  {%for spender in spender_list%}
 								  <div class="radio">
@@ -263,7 +263,7 @@
 
 							  <!-- Date -->
 							  <div class="form-group">
-								  <label>Date:</label>
+								  <label>Date: <font color="#FF0000">*</font></label>
 								  <div class="input-group date">
 									  <div class="input-group-addon">
 										  <i class="fa fa-calendar"></i>
@@ -278,7 +278,7 @@
 								  <div class="form-group">
 									  <label>Time:</label>
 									  <div class="input-group">
-										  <input name="time" type="text" class="form-control timepicker">
+										  <input name="time" type="text" class="form-control timepicker" id="timepicker">
 										  <div class="input-group-addon">
 											  <i class="fa fa-clock-o"></i>
 										  </div>
@@ -290,7 +290,7 @@
 
 							  <!-- Type -->
 							  <div class="form-group">
-								  <label>Type</label>
+								  <label>Type: <font color="#FF0000">*</font></label>
 
 
 								  <select name="type" class="form-control select2" style="width: 100%;">
@@ -327,7 +327,7 @@
 				  </div>
 				  <!-- /.box-header -->
 
-				  <form class="form-horizontal" action="/moneymanagement/delete" method="post">
+				  <form class="form-horizontal" action="/moneymanagement/delete" method="post" autocomplete="off">
 
 					  <div class="box-body">
 
@@ -335,7 +335,7 @@
 
 							  <!-- text input -->
 							  <div class="form-group">
-								  <label>Account id:</label>
+								  <label>Account id: <font color="#FF0000">*</font></label>
 								  <input name="accountid" type="text" class="form-control" placeholder="Input the account id of which you want to delete">
 							  </div>
 							  <!-- /.form group -->
@@ -369,15 +369,19 @@
 				  </div>
 				  <!-- /.box-header -->
 
-				  <form class="form-horizontal" action="/moneymanagement/edit" method="post">
+				  <form class="form-horizontal" action="/moneymanagement/edit" method="post" autocomplete="off">
 
 					  <div class="box-body">
 
 						  <div class="col-md-12">
 
+							  <div class="form-group">
+								  <label>Blank items will remain unchanged.</label>
+							  </div>
+
 							  <!-- text input -->
 							  <div class="form-group">
-								  <label>Account id:</label>
+								  <label>Account id: <font color="#FF0000">*</font></label>
 								  <input name="accountid" type="text" class="form-control" placeholder="Input the account id of which you want to edit">
 							  </div>
 							  <!-- /.form group -->
@@ -419,7 +423,7 @@
 									  <div class="input-group-addon">
 										  <i class="fa fa-calendar"></i>
 									  </div>
-									  <input name="date" type="text" class="form-control pull-right" id="datepicker">
+									  <input name="date" type="text" class="form-control pull-right" id="datepicker2">
 								  </div>
 								  <!-- /.input group -->
 							  </div>
@@ -429,7 +433,7 @@
 								  <div class="form-group">
 									  <label>Time:</label>
 									  <div class="input-group">
-										  <input name="time" type="text" class="form-control timepicker">
+										  <input name="time" type="text" class="form-control timepicker" id="timepicker2">
 										  <div class="input-group-addon">
 											  <i class="fa fa-clock-o"></i>
 										  </div>
@@ -441,11 +445,12 @@
 
 							  <!-- Type -->
 							  <div class="form-group">
-								  <label>Type</label>
+								  <label>Type:</label>
 
 
 								  <select name="type" class="form-control select2" style="width: 100%;">
 
+									  <option value=""></option>
 									  {%for type in type_list%}
 									  <option value={{type[0]}}>{{type[1]}}</option>
 									  {%endfor%}
@@ -573,6 +578,10 @@
       autoclose: true
     })
 
+	$('#datepicker2').datepicker({
+      autoclose: true
+    })
+
     //iCheck for checkbox and radio inputs
     $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
       checkboxClass: 'icheckbox_minimal-blue',
@@ -595,7 +604,13 @@
     $('.my-colorpicker2').colorpicker()
 
     //Timepicker
-    $('.timepicker').timepicker({
+    //docs @ https://jdewit.github.io/bootstrap-timepicker/
+    //close the default time
+    $('#timepicker').timepicker({
+      showInputs: false
+    })
+    $('#timepicker2').timepicker({
+      defaultTime: false,
       showInputs: false
     })
   })
