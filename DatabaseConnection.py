@@ -31,6 +31,7 @@ class Connection(object):
 
 database = Connection()
 
+
 def exec_add_spender(name):
     sql = "INSERT INTO spender(spender_name) " \
           "VALUES('%s')"
@@ -44,6 +45,23 @@ def exec_add_account(description, cost, spenderid, date, time, typeid):
     sql = "INSERT INTO account(account_description, account_cost, account_spenderid, account_date, account_time, account_typeid) " \
           "VALUES('%s','%s','%s','%s','%s','%s')"
     data = (description, cost, spenderid, date, time, typeid)
+    database.exec_update(sql % data)
+
+
+def exec_edit_account(description, cost, spenderid, date, time, typeid, accountid):
+    sql = "UPDATE account " \
+          "SET account_description='%s', account_cost='%s', account_spenderid='%s', account_date='%s', account_time='%s', account_typeid='%s'" \
+          "WHERE account_id='%d'"
+    print(sql)
+    data = (description, cost, spenderid, date, time, typeid, accountid)
+    database.exec_update(sql % data)
+
+
+def exec_edit_account_column(column, value, accountid):
+    sql = "UPDATE account " \
+          "SET '%s'='%s' " \
+          "WHERE account_id='%d'"
+    data = (column, value, accountid)
     database.exec_update(sql % data)
 
 
