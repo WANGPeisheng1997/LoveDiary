@@ -59,9 +59,10 @@ def exec_edit_account(description, cost, spenderid, date, time, typeid, accounti
 
 def exec_edit_account_column(column, value, accountid):
     sql = "UPDATE account " \
-          "SET '%s'='%s' " \
+          "SET %s='%s' " \
           "WHERE account_id='%d'"
     data = (column, value, accountid)
+    print(sql % data)
     database.exec_update(sql % data)
 
 

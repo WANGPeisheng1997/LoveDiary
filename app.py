@@ -11,7 +11,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return redirect('/japan/accounting')
+    return redirect('/moneymanagement')
 
 
 @app.route('/japan/accounting', methods=['GET'])
