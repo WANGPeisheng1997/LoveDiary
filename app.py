@@ -77,13 +77,43 @@ def process_form_post(post_type=None):
         spenderid = request.form['spender']
         date = request.form['date']
         time = request.form['time']
+        if time == '':
+            formatted_time = ''
+        else:
+            formatted_time = time_web_to_sql(time)
         typeid = request.form['type']
-        DatabaseConnection.exec_add_account(description, cost, spenderid, date_web_to_sql(date), time_web_to_sql(time),
+        DatabaseConnection.exec_add_account(description, cost, spenderid, date_web_to_sql(date), formatted_time,
                                             typeid)
+
+    if post_type == "edit":
+        accountid = int(request.form['accountid'])
+        description = request.form['description']
+        if description != '':
+            DatabaseConnection.exec_edit_account_column('account_description', description, accountid)
+        cost = request.form['cost']
+        if cost != '':
+            DatabaseConnection.exec_edit_account_column('account_cost', cost, accountid)
+
+        if 'spender' in request.form:
+            spenderid = request.form['spender']
+            DatabaseConnection.exec_edit_account_column('account_spenderid', spenderid, accountid)
+
+        date = request.form['date']
+        if date != '':
+            DatabaseConnection.exec_edit_account_column('account_date', date_web_to_sql(date), accountid)
+
+        time = request.form['time']
+        if time != '':
+            DatabaseConnection.exec_edit_account_column('account_time', time_web_to_sql(time), accountid)
+
+        typeid = request.form['type']
+        if typeid != '':
+            DatabaseConnection.exec_edit_account_column('account_typeid', typeid, accountid)
 
     if post_type == "delete":
         accountid = int(request.form['accountid'])
         DatabaseConnection.exec_delete_account(accountid)
+
     DatabaseConnection.database.disconnect_database()
     return redirect('/moneymanagement')
 
@@ -109,7 +139,7 @@ def time_sql_to_web(date):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host=('0.0.0.0'))
     # print(date_web_to_sql("7/16/2015"))
     # print(date_sql_to_web("2015-07-03"))
     # print(time_web_to_sql("7:03 PM"))
