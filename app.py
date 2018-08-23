@@ -3,10 +3,19 @@
 import DatabaseConnection
 import JapanDatabaseConnection
 from flask import Flask, render_template, request, redirect, url_for, flash
+from flask_login import LoginManager
 from datetime import datetime
+from user import User
 import time
 
 app = Flask(__name__)
+app.secret_key = 'asfasfasfasqwerqwr'
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+@login_manager.user_loader
+def load_user(userid):
+    return User.get(userid)
 
 
 @app.route('/')
@@ -58,6 +67,7 @@ def japan_maps():
 @app.route('/moneymanagement', methods=['GET'])
 def money_management():
     start = time.clock()
+    flash("hello")
     DatabaseConnection.database.connect_database()
     accounts = DatabaseConnection.exec_fetch_all_accounts()
     types = DatabaseConnection.exec_fetch_all_types()
@@ -139,7 +149,7 @@ def time_sql_to_web(date):
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host=('0.0.0.0'))
+    app.run(debug=True)
     # print(date_web_to_sql("7/16/2015"))
     # print(date_sql_to_web("2015-07-03"))
     # print(time_web_to_sql("7:03 PM"))
