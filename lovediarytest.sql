@@ -1,4 +1,15 @@
 /*==============================================================*/
+/* Table: users                                                  */
+/*==============================================================*/
+create table users
+(
+   user_id           int not null auto_increment,
+   user_name         text not null,
+   user_password     text not null,
+   primary key (user_id)
+);
+
+/*==============================================================*/
 /* Table: spender                                               */
 /*==============================================================*/
 create table spender
@@ -34,6 +45,11 @@ create table account
    foreign key (account_spenderid) references spender(spender_id),
    foreign key (account_typeid) references account_type(type_id)
 );
+
+insert into users(user_name, user_password) values ("wps", "wps");
+insert into users(user_name, user_password) values ("gdm", "gdm");
+insert into users(user_name, user_password) values ("zyf", "zyf");
+insert into users(user_name, user_password) values ("fxt", "fxt");
 
 insert into spender(spender_name) values ("WPS");
 insert into spender(spender_name) values ("Sweetie");
