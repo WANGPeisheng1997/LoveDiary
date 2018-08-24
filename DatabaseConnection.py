@@ -94,6 +94,29 @@ def exec_fetch_all_spenders():
     return spender_list
 
 
+def exec_fetch_user_with_id(id):
+    sql = "SELECT * FROM users WHERE user_id='%d'"
+    database.exec_query(sql % id)
+    user = database.fetch_cursor()
+    if len(user) == 0:
+        return None
+    else:
+        return user[0]
+
+
+def exec_user_login(username, password):
+    sql = "SELECT user_id FROM users WHERE user_name='%s' AND user_password='%s'"
+    database.exec_query(sql % (username, password))
+    userid = database.fetch_cursor()
+    if len(userid) == 0:
+        return None
+    else:
+        return userid[0][0]
+
+# database.connect_database()
+# print(exec_user_login("wps","wps"))
+# database.disconnect_database()
+
 # def exec_query_spender_from_id(spender_id):
 #     start = time.clock()
 #     # database.connect_database()
