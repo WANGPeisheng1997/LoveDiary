@@ -3,27 +3,66 @@
 import DatabaseConnection
 import JapanDatabaseConnection
 from flask import Flask, render_template, request, redirect, url_for, flash
-from flask_login import LoginManager
+from flask_login import LoginManager, login_user, login_required, logout_user
 from datetime import datetime
 from user import User
 import time
 
 app = Flask(__name__)
 app.secret_key = 'asfasfasfasqwerqwr'
+
+
+# homepage direction
+@app.route('/')
+@login_required
+def index():
+    return redirect('/moneymanagement')
+
+# login routes and methods
 login_manager = LoginManager()
 login_manager.init_app(app)
+login_manager.session_protection = "strong"
+login_manager.login_view = "login"
+
 
 @login_manager.user_loader
 def load_user(userid):
     return User.get(userid)
 
 
-@app.route('/')
-def index():
-    return redirect('/moneymanagement')
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'GET':
+        return render_template('login.html')
+    if request.method == 'POST':
+        DatabaseConnection.database.connect_database()
+        print(request.form)
+        if "username" in request.form and "password" in request.form:
+            username = request.form['username']
+            password = request.form['password']
+            userid = DatabaseConnection.exec_user_login(username, password)
+            print(username, password, userid)
+        else:
+            userid = None
+        if userid is not None:
+            login_user(User(id=userid, username=username))
+            flash('Logged in successfully.')
+            return redirect(url_for('index'))
+        else:
+            flash('Logged in failed.')
+            return render_template('login.html')
 
 
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
+
+
+# routes for japan
 @app.route('/japan/accounting', methods=['GET'])
+@login_required
 def japan_accounting():
     JapanDatabaseConnection.japan_database.connect_database()
     accounts = JapanDatabaseConnection.exec_fetch_all_accounts()
@@ -34,6 +73,7 @@ def japan_accounting():
 
 
 @app.route('/japan/accounting/<post_type>', methods=['POST'])
+@login_required
 def japan_process_form_post(post_type=None):
     JapanDatabaseConnection.japan_database.connect_database()
     if post_type == "add":
@@ -55,16 +95,20 @@ def japan_process_form_post(post_type=None):
 
 
 @app.route('/japan/schedule', methods=['GET'])
+@login_required
 def japan_schedule():
     return render_template('japan_schedule.html')
 
 
 @app.route('/japan/maps', methods=['GET'])
+@login_required
 def japan_maps():
     return render_template('japan_maps.html')
 
 
+# routes for love diary
 @app.route('/moneymanagement', methods=['GET'])
+@login_required
 def money_management():
     start = time.clock()
     flash("hello")
@@ -79,6 +123,7 @@ def money_management():
 
 
 @app.route('/moneymanagement/<post_type>', methods=['POST'])
+@login_required
 def process_form_post(post_type=None):
     DatabaseConnection.database.connect_database()
     if post_type == "add":
@@ -149,7 +194,7 @@ def time_sql_to_web(date):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host=('0.0.0.0'))
     # print(date_web_to_sql("7/16/2015"))
     # print(date_sql_to_web("2015-07-03"))
     # print(time_web_to_sql("7:03 PM"))
