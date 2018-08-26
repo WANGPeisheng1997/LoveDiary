@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Love Diary | Log in</title>
+  <title>Japan Helper | Log in</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -30,16 +30,16 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="/login"><b>Love</b>Diary</a>
+    <a href="/login"><b>Japan</b>Helper</a>
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
-    <p class="login-box-msg">Sign in to start recording your love</p>
+    <p class="login-box-msg">Sign in to access Japan Helper</p>
     {% for message in get_flashed_messages() %}
     	<p style="color:red;"> {{ message }} </p>
     {% endfor %}
 
-    <form action="/login" method="post">
+    <form action="/japan/login" method="post">
       <div class="form-group has-feedback">
         <input name="username" type="text" class="form-control" placeholder="Username">
         <span class="glyphicon glyphicon-user form-control-feedback"></span>
@@ -63,7 +63,7 @@
         <!-- /.col -->
       </div>
       <div class="text-center">
-        <a href="/japan/login" class="login-box-msg">Switch to Japan Helper</a>
+        <a href="/login" class="login-box-msg">Switch to Love Diary</a>
       </div>
 
     </form>
