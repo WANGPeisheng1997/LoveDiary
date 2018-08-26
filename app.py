@@ -31,18 +31,15 @@ def load_user(userid):
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-
     if request.method == 'GET':
         return render_template('login.html')
     if request.method == 'POST':
-        print(request.form)
         if "username" in request.form and "password" in request.form:
             username = request.form['username']
             password = request.form['password']
             DatabaseConnection.database.connect_database()
             userid = DatabaseConnection.exec_user_login(username, password)
             DatabaseConnection.database.disconnect_database()
-            print(username, password, userid)
         else:
             userid = None
         if userid is not None:
@@ -53,6 +50,27 @@ def login():
             flash('Wrong username or password!')
             return render_template('login.html')
 
+
+@app.route('/japan/login', methods=['GET', 'POST'])
+def japan_login():
+    if request.method == 'GET':
+        return render_template('japanlogin.html')
+    if request.method == 'POST':
+        if "username" in request.form and "password" in request.form:
+            username = request.form['username']
+            password = request.form['password']
+            DatabaseConnection.database.connect_database()
+            userid = DatabaseConnection.exec_user_login(username, password)
+            DatabaseConnection.database.disconnect_database()
+        else:
+            userid = None
+        if userid is not None:
+            login_user(User(id=userid, username=username))
+            flash('Logged in successfully.')
+            return redirect(url_for('japan_accounting'))
+        else:
+            flash('Wrong username or password!')
+            return render_template('japanlogin.html')
 
 @app.route("/logout")
 @login_required
@@ -191,11 +209,6 @@ def time_web_to_sql(date):
 def time_sql_to_web(date):
     trans = datetime.strptime(date, '%H:%M:%S').strftime('%I:%M %p')
     return trans
-
-
-@app.route('/sidebar', methods=['GET', 'POST'])
-def sidebar():
-    return render_template('sidebar.html')
 
 
 if __name__ == '__main__':
