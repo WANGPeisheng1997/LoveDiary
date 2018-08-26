@@ -39,11 +39,11 @@
   <header class="main-header">
 
 	<!-- Logo -->
-	<a href="index2.html" class="logo">
+	<a href="/" class="logo">
 	  <!-- mini logo for sidebar mini 50x50 pixels -->
-	  <span class="logo-mini"><b>L</b>Dy</span>
+	  <span class="logo-mini">{% block logomini %}<b>L</b>Dy{% endblock %}</span>
 	  <!-- logo for regular state and mobile devices -->
-	  <span class="logo-lg"><b>Love</b>Diary</span>
+	  <span class="logo-lg">{% block logo %}<b>Love</b>Diary{% endblock %}</span>
 	</a>
 
 	<!-- Header Navbar -->
@@ -130,10 +130,12 @@
 		  <ul class="sidebar-menu" data-widget="tree">
 			<li class="header">Main</li>
 			<!-- Optionally, you can add icons to the links -->
+			{% block sidebar %}
 			<li><a href="#"><i class="fa fa-link"></i> <span>Dashboard</span></a></li>
 			<li><a href="#"><i class="fa fa-link"></i> <span>Diary</span></a></li>
 			<li><a href="#"><i class="fa fa-link"></i> <span>Calendar</span></a></li>
 			<li class="active"><a href="#"><i class="fa fa-link"></i> <span>Money Management</span></a></li>
+			{% endblock %}
 		  </ul>
 		  <!-- /.sidebar-menu -->
 		</section>
@@ -145,11 +147,11 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Money Management
+        {% block contenttitle %}{% endblock %}
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Money Management</li>
+        <li class="active">{{ self.contenttitle() }}</li>
       </ol>
     </section>
 
@@ -165,7 +167,7 @@
 	<footer class="main-footer">
 		<!-- To the right -->
 		<div class="pull-right hidden-xs">
-		  Gu
+
 		</div>
 		<!-- Default to the left -->
 		<strong>Copyright &copy; 2018 <a href="#">Peisheng Wang</a>.</strong> All rights reserved.
