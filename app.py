@@ -24,7 +24,6 @@ login_manager.init_app(app)
 login_manager.session_protection = "strong"
 login_manager.login_view = "login"
 
-
 @login_manager.user_loader
 def load_user(userid):
     return User.get(userid)
@@ -32,15 +31,17 @@ def load_user(userid):
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+
     if request.method == 'GET':
         return render_template('login.html')
     if request.method == 'POST':
-        DatabaseConnection.database.connect_database()
         print(request.form)
         if "username" in request.form and "password" in request.form:
             username = request.form['username']
             password = request.form['password']
+            DatabaseConnection.database.connect_database()
             userid = DatabaseConnection.exec_user_login(username, password)
+            DatabaseConnection.database.disconnect_database()
             print(username, password, userid)
         else:
             userid = None
@@ -49,7 +50,7 @@ def login():
             flash('Logged in successfully.')
             return redirect(url_for('index'))
         else:
-            flash('Logged in failed.')
+            flash('Wrong username or password!')
             return render_template('login.html')
 
 
@@ -111,7 +112,6 @@ def japan_maps():
 @login_required
 def money_management():
     start = time.clock()
-    flash("hello")
     DatabaseConnection.database.connect_database()
     accounts = DatabaseConnection.exec_fetch_all_accounts()
     types = DatabaseConnection.exec_fetch_all_types()
@@ -191,6 +191,11 @@ def time_web_to_sql(date):
 def time_sql_to_web(date):
     trans = datetime.strptime(date, '%H:%M:%S').strftime('%I:%M %p')
     return trans
+
+
+@app.route('/sidebar', methods=['GET', 'POST'])
+def sidebar():
+    return render_template('sidebar.html')
 
 
 if __name__ == '__main__':

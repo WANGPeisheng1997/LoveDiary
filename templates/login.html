@@ -36,6 +36,11 @@
   <div class="login-box-body">
     <p class="login-box-msg">Sign in to start recording your love</p>
 
+
+    {% for message in get_flashed_messages() %}
+    	<p style="color:red;"> {{ message }} </p>
+    {% endfor %}
+
     <form action="/login" method="post">
       <div class="form-group has-feedback">
         <input name="username" type="text" class="form-control" placeholder="Username">
