@@ -2,29 +2,52 @@
 {% block title %}LoveDiary | Dashboard{% endblock %}
 {% block contenttitle %} Dashboard{% endblock %}
 
+{% block sidebar %}
+	<li class="active"><a href="/dashboard"><i class="fa fa-link"></i> <span>Dashboard</span></a></li>
+	<li><a href="#"><i class="fa fa-link"></i> <span>Diary</span></a></li>
+	<li><a href="#"><i class="fa fa-link"></i> <span>Calendar</span></a></li>
+	<li><a href="/moneymanagement"><i class="fa fa-link"></i> <span>Money Management</span></a></li>
+{% endblock %}
+
 {% block content %}
     <!-- Main content -->
     <section class="content">
 
-		 <!-- Show accounts -->
-		 <div class="row">
-		  <div class="col-lg-10">
-			  <div class="box box-solid box-danger">
+		<!-- Show Pie Chart -->
+		<div class="row">
+			<div class="col-lg-5">
+				<div class="box box-solid box-danger">
 
-				<div class="box-header with-border">
-				  <i class="fa fa-bar-chart-o"></i>
+					<div class="box-header with-border">
+						<i class="fa fa-bar-chart-o"></i>
+						<h3 class="box-title">Money Pie Chart</h3>
+					</div>
 
-				  <h3 class="box-title">Donut Chart</h3>
+					<div id="canvas-holder-pie" style="width:100%">
+						<canvas id="chart-area-pie"></canvas>
+					</div>
 
 				</div>
+			</div>
+		</div>
 
-				<div class="box-body">
-				  <div id="donut-chart" style="height: 300px;"></div>
+		<!-- Show Bar Chart -->
+		<div class="row">
+			<div class="col-lg-5">
+				<div class="box box-solid box-danger">
+
+					<div class="box-header with-border">
+						<i class="fa fa-bar-chart-o"></i>
+						<h3 class="box-title">Money Bar Chart</h3>
+					</div>
+
+					<div id="canvas-holder-bar1" style="width:100%">
+						<canvas id="chart-area-bar1"></canvas>
+					</div>
+
 				</div>
-				<!-- /.box-body-->
-			  </div>
-		  </div>
-		 </div>
+			</div>
+		</div>
 
     </section>
     <!-- /.content -->
@@ -40,49 +63,102 @@
 	<script src="../static/bower_components/Flot/jquery.flot.pie.js"></script>
 	<!-- FLOT CATEGORIES PLUGIN - Used to draw bar charts -->
 	<script src="../static/bower_components/Flot/jquery.flot.categories.js"></script>
-
+	<!-- New Chart js -->
+	<script src="../static/bower_components/Chart.js-2.7.2/dist/Chart.bundle.js"></script>
 	<!-- Page script -->
 	<script>
-		var donutData = [
-			{ label: 'Series5', data: 170, color: '#3d8dbc' },
-			{ label: 'Series6', data: 80, color: '#3c2dbc' },
-			{ label: 'Series1', data: 20, color: '#638dbc' },
-			{ label: 'Series2', data: 70, color: '#3c8dbc' },
-			{ label: 'Series3', data: 60, color: '#0073b7' },
-			{ label: 'Series4', data: 50, color: '#00c0ef' }
-		]
-		$.plot('#donut-chart', donutData, {
-		  series: {
-			pie: {
-			  show       : true,
-			  radius     : 1,
-			  innerRadius: 0.4,
-			  label      : {
-				show     : true,
-				radius   : 0.7,
-				formatter: labelFormatter,
-				threshold: 0.0
-			  }
 
+		window.chartColors = {
+			red: 'rgb(255, 99, 132)',
+			orange: 'rgb(255, 159, 64)',
+			yellow: 'rgb(255, 205, 86)',
+			green: 'rgb(75, 192, 192)',
+			blue: 'rgb(54, 162, 235)',
+			purple: 'rgb(153, 102, 255)',
+			grey: 'rgb(201, 203, 207)'
+		};
+		var config = {
+			type: 'doughnut',
+			data: {
+				datasets: [{
+					data: {{ pie_data }},
+					backgroundColor: [
+						window.chartColors.red,
+						window.chartColors.orange,
+						window.chartColors.yellow,
+						window.chartColors.green,
+						window.chartColors.blue,
+						window.chartColors.blue,
+						window.chartColors.blue,
+						window.chartColors.blue,
+						window.chartColors.blue,
+					],
+				}],
+				labels: {{ pie_labels | tojson }}
+			},
+			options: {
+				responsive: true,
+				legend: {
+					position: 'right',
+				},
+				title: {
+					display: true,
+					text: 'Chart - Total cost of each type'
+				},
+				animation: {
+					animateScale: true,
+					animateRotate: true
+				}
 			}
-		  },
-		  legend: {
-			show: true
-		  },
-		  grid: {
-		  	hoverable: true,
-		  	clickable: true
-		  }
-		})
+		};
 
-		function labelFormatter(label, series, data) {
-			return '<div style="font-size:13px; text-align:center; padding:2px; color: #fff; font-weight: 600;">'
-			  + label
-			  + '<br>'
-			  + Math.round(data)
-			  + '<br>'
-			  + Math.round(series.percent) + '%</div>'
-		  }
+		var MONTHS = ['June', 'July', 'August'];
+		var color = Chart.helpers.color;
+		var barChartData = {
+			labels: MONTHS,
+			datasets: [{
+				label: 'Wps',
+				backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
+				borderColor: window.chartColors.red,
+				borderWidth: 1,
+				data: {{ wpsdata }}
+			}, {
+				label: 'Sweetie',
+				backgroundColor: color(window.chartColors.blue).alpha(0.5).rgbString(),
+				borderColor: window.chartColors.blue,
+				borderWidth: 1,
+				data: {{ sweetiedata }}
+			}, {
+				label: 'Total',
+				backgroundColor: color(window.chartColors.green).alpha(0.5).rgbString(),
+				borderColor: window.chartColors.green,
+				borderWidth: 1,
+				data: {{ totaldata }}
+			}
+			]
+
+		};
+
+		window.onload = function() {
+			var ctx = document.getElementById('chart-area-pie').getContext('2d');
+			window.myDoughnut = new Chart(ctx, config);
+
+			var ctx = document.getElementById('chart-area-bar1').getContext('2d');
+			window.myBar = new Chart(ctx, {
+				type: 'bar',
+				data: barChartData,
+				options: {
+					responsive: true,
+					legend: {
+						position: 'top',
+					},
+					title: {
+						display: true,
+						text: 'Chart - Total cost of each month'
+					}
+				}
+			});
+		};
 	</script>
 
 {% endblock extrascripts%}
