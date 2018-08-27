@@ -108,7 +108,7 @@ def exec_user_login(username, password):
     database.exec_query(sql % (username, password))
     user = database.fetch_cursor()
     if len(user) == 0:
-        return None
+        return None, None
     else:
         return user[0][0], user[0][1]
 

@@ -64,7 +64,7 @@ def japan_login():
             username = request.form['username']
             password = request.form['password']
             DatabaseConnection.database.connect_database()
-            userid = DatabaseConnection.exec_user_login(username, password)
+            userid, userpermission = DatabaseConnection.exec_user_login(username, password)
             DatabaseConnection.database.disconnect_database()
         else:
             userid = None
