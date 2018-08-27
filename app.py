@@ -166,7 +166,29 @@ def japan_maps():
 
 @app.route('/dashboard', methods=['GET'])
 def dashboard():
-    return render_template('dashboard.html')
+    DatabaseConnection.database.connect_database()
+    pie_data = []
+    pie_labels = []
+    pydata = DatabaseConnection.exec_calculate_sum_for_each_type()
+    for type_name, sum in pydata:
+        pie_data.append(float(sum))
+        pie_labels.append(type_name)
+
+    wps = []
+    sweetie = []
+    total = []
+    months = ['2018-06', '2018-07', '2018-08']
+    for month in months:
+        wpst = float(DatabaseConnection.exec_calculate_sum_for_specific_month_and_spender(1, month))
+        wps.append(wpst)
+        sweetiet = float(DatabaseConnection.exec_calculate_sum_for_specific_month_and_spender(2, month))
+        sweetie.append(sweetiet)
+        total.append(wpst + sweetiet)
+        print(wpst, sweetiet)
+
+    print(pydata)
+    DatabaseConnection.database.disconnect_database()
+    return render_template('dashboard.html', pie_data=pie_data, pie_labels=pie_labels, wpsdata=wps, sweetiedata=sweetie, totaldata=total)
 
 
 # routes for love diary
@@ -256,5 +278,5 @@ def time_sql_to_web(date):
 
 
 if __name__ == '__main__':
-    #app.run(debug=True, host=('0.0.0.0'))
-    app.run(debug=True)
+    app.run(debug=True, host=('0.0.0.0'))
+    #app.run(debug=True)

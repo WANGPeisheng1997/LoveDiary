@@ -79,6 +79,44 @@ def exec_fetch_all_accounts():
     return accounts
 
 
+def exec_calculate_sum_for_each_type():
+    sql = "SELECT account_type.type_name, SUM(account.account_cost) " \
+          "FROM account, account_type " \
+          "WHERE account.account_typeid=account_type.type_id " \
+          "GROUP BY account.account_typeid"
+    database.exec_query(sql)
+    sum = database.fetch_cursor()
+    return sum
+
+
+def exec_calculate_sum_for_each_month():
+    sql = "SELECT date_format(account_date, '%Y-%m'), SUM(account_cost) " \
+          "FROM account " \
+          "GROUP BY date_format(account_date, '%Y-%m')"
+    database.exec_query(sql)
+    sum = database.fetch_cursor()
+    return sum
+
+
+def exec_calculate_sum_for_each_date():
+    sql = "SELECT account_date, SUM(account_cost) " \
+          "FROM account " \
+          "GROUP BY account_date"
+    database.exec_query(sql)
+    sum = database.fetch_cursor()
+    return sum
+
+
+def exec_calculate_sum_for_specific_month_and_spender(spenderid, month):
+    sql = "SELECT SUM(account_cost) " \
+          "FROM account " \
+          "WHERE account_spenderid = %d AND account_date LIKE '" + month + "%%'"
+    database.exec_query(sql % spenderid)
+    sum = database.fetch_cursor()[0][0]
+    if sum is None:
+        return 0
+    return sum
+
 def exec_fetch_all_types():
     sql = "SELECT * FROM account_type"
     database.exec_query(sql)
