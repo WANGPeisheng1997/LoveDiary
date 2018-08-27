@@ -37,45 +37,47 @@
 				</div>
 				<!-- /.box-header -->
 				<div class="box-body">
-				  <table id="account_table" class="table table-bordered table-striped table-responsive">
-					<thead>
-					<tr>
-					  <th>Account id</th>
-					  <th>Date</th>
-					  <th>Time</th>
-					  <th>Description</th>
-					  <th>Currency</th>
-					  <th>Cost</th>
-					  <th>Spender</th>
-					  <th>Type</th>
-					</tr>
-					</thead>
+					<div class="table-responsive">
+					  <table id="account_table" class="table table-bordered table-striped">
+						<thead>
+						<tr>
+						  <th>Account id</th>
+						  <th>Date</th>
+						  <th>Time</th>
+						  <th>Description</th>
+						  <th>Currency</th>
+						  <th>Cost</th>
+						  <th>Spender</th>
+						  <th>Type</th>
+						</tr>
+						</thead>
 
-					<tbody>
+						<tbody>
 
-					{%for account in account_list%}
-                    <tr>
-						{%for item in account%}
-						<td>{{item}}</td>
+						{%for account in account_list%}
+						<tr>
+							{%for item in account%}
+							<td>{{item}}</td>
+							{%endfor%}
+						</tr>
 						{%endfor%}
-                    </tr>
-                    {%endfor%}
 
-					</tbody>
+						</tbody>
 
-					<tfoot>
-					<tr>
-					  <th>Account id</th>
-					  <th>Date</th>
-					  <th>Time</th>
-					  <th>Description</th>
-					  <th>Currency</th>
-					  <th>Cost</th>
-					  <th>Spender</th>
-					  <th>Type</th>
-					</tr>
-					</tfoot>
-				  </table>
+						<tfoot>
+						<tr>
+						  <th>Account id</th>
+						  <th>Date</th>
+						  <th>Time</th>
+						  <th>Description</th>
+						  <th>Currency</th>
+						  <th>Cost</th>
+						  <th>Spender</th>
+						  <th>Type</th>
+						</tr>
+						</tfoot>
+					  </table>
+					</div>>
 				</div>
 				<!-- /.box-body -->
 			  </div>
