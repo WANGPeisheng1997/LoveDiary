@@ -62,7 +62,6 @@ def exec_edit_account_column(column, value, accountid):
           "SET %s='%s' " \
           "WHERE account_id='%d'"
     data = (column, value, accountid)
-    print(sql % data)
     database.exec_update(sql % data)
 
 

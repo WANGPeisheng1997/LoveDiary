@@ -102,13 +102,48 @@ def japan_process_form_post(post_type=None):
         spenderid = request.form['spender']
         date = request.form['date']
         time = request.form['time']
+        if time == '':
+            formatted_time = ''
+        else:
+            formatted_time = time_web_to_sql(time)
         typeid = request.form['type']
         JapanDatabaseConnection.exec_add_account(description, currency, cost, spenderid, date_web_to_sql(date), time_web_to_sql(time),
                                             typeid)
 
+    if post_type == "edit":
+        accountid = int(request.form['accountid'])
+        description = request.form['description']
+        if description != '':
+            JapanDatabaseConnection.exec_edit_account_column('account_description', description, accountid)
+
+        if 'currency' in request.form:
+            currency = request.form['currency']
+            JapanDatabaseConnection.exec_edit_account_column('account_currency', currency, accountid)
+
+        cost = request.form['cost']
+        if cost != '':
+            JapanDatabaseConnection.exec_edit_account_column('account_cost', cost, accountid)
+
+        if 'spender' in request.form:
+            spenderid = request.form['spender']
+            JapanDatabaseConnection.exec_edit_account_column('account_spenderid', spenderid, accountid)
+
+        date = request.form['date']
+        if date != '':
+            JapanDatabaseConnection.exec_edit_account_column('account_date', date_web_to_sql(date), accountid)
+
+        time = request.form['time']
+        if time != '':
+            JapanDatabaseConnection.exec_edit_account_column('account_time', time_web_to_sql(time), accountid)
+
+        typeid = request.form['type']
+        if typeid != '':
+            JapanDatabaseConnection.exec_edit_account_column('account_typeid', typeid, accountid)
+
     if post_type == "delete":
         accountid = int(request.form['accountid'])
         JapanDatabaseConnection.exec_delete_account(accountid)
+
     JapanDatabaseConnection.japan_database.disconnect_database()
     return redirect('/japan/accounting')
 
@@ -213,6 +248,4 @@ def time_sql_to_web(date):
 
 if __name__ == '__main__':
     app.run(debug=True, host=('0.0.0.0'))
-    # print(date_web_to_sql("7/16/2015"))
-    # print(date_sql_to_web("2015-07-03"))
-    # print(time_web_to_sql("7:03 PM"))
+    #app.run(debug=True)

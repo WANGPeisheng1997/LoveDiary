@@ -44,6 +44,14 @@ def exec_delete_account(accountid):
     japan_database.exec_update(sql % accountid)
 
 
+def exec_edit_account_column(column, value, accountid):
+    sql = "UPDATE account " \
+          "SET %s='%s' " \
+          "WHERE account_id='%d'"
+    data = (column, value, accountid)
+    japan_database.exec_update(sql % data)
+
+
 def exec_fetch_all_accounts():
     sql = "SELECT account_id, account_date, account_time, account_description, account_currency, account_cost, spender_name, type_name " \
           "FROM account, spender, account_type " \
