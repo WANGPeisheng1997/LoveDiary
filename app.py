@@ -164,6 +164,11 @@ def japan_maps():
     return render_template('japan_maps.html')
 
 
+@app.route('/dashboard', methods=['GET'])
+def dashboard():
+    return render_template('dashboard.html')
+
+
 # routes for love diary
 @app.route('/moneymanagement', methods=['GET'])
 @login_required
@@ -251,5 +256,5 @@ def time_sql_to_web(date):
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host=('0.0.0.0'))
-    #app.run(debug=True)
+    #app.run(debug=True, host=('0.0.0.0'))
+    app.run(debug=True)

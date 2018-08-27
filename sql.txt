@@ -1,0 +1,4 @@
+SELECT account_type.type_name, SUM(account.account_cost) as "Total costs"
+FROM account, account_type
+WHERE account.account_typeid=account_type.type_id
+GROUP BY account.account_typeid

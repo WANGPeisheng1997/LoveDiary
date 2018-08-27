@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block title %}LoveDiary | Dashboard{% endblock %}
+{% block contenttitle %} Dashboard{% endblock %}
+
+{% block content %}
+    <!-- Main content -->
+    <section class="content">
+
+		 <!-- Show accounts -->
+		 <div class="row">
+		  <div class="col-lg-10">
+			  <div class="box box-solid box-danger">
+
+				<div class="box-header with-border">
+				  <i class="fa fa-bar-chart-o"></i>
+
+				  <h3 class="box-title">Donut Chart</h3>
+
+				</div>
+
+				<div class="box-body">
+				  <div id="donut-chart" style="height: 300px;"></div>
+				</div>
+				<!-- /.box-body-->
+			  </div>
+		  </div>
+		 </div>
+
+    </section>
+    <!-- /.content -->
+{% endblock content%}
+
+{% block extrascripts %}
+
+	<!-- FLOT CHARTS -->
+	<script src="../static/bower_components/Flot/jquery.flot.js"></script>
+	<!-- FLOT RESIZE PLUGIN - allows the chart to redraw when the window is resized -->
+	<script src="../static/bower_components/Flot/jquery.flot.resize.js"></script>
+	<!-- FLOT PIE PLUGIN - also used to draw donut charts -->
+	<script src="../static/bower_components/Flot/jquery.flot.pie.js"></script>
+	<!-- FLOT CATEGORIES PLUGIN - Used to draw bar charts -->
+	<script src="../static/bower_components/Flot/jquery.flot.categories.js"></script>
+
+	<!-- Page script -->
+	<script>
+		var donutData = [
+			{ label: 'Series5', data: 170, color: '#3d8dbc' },
+			{ label: 'Series6', data: 80, color: '#3c2dbc' },
+			{ label: 'Series1', data: 20, color: '#638dbc' },
+			{ label: 'Series2', data: 70, color: '#3c8dbc' },
+			{ label: 'Series3', data: 60, color: '#0073b7' },
+			{ label: 'Series4', data: 50, color: '#00c0ef' }
+		]
+		$.plot('#donut-chart', donutData, {
+		  series: {
+			pie: {
+			  show       : true,
+			  radius     : 1,
+			  innerRadius: 0.4,
+			  label      : {
+				show     : true,
+				radius   : 0.7,
+				formatter: labelFormatter,
+				threshold: 0.0
+			  }
+
+			}
+		  },
+		  legend: {
+			show: true
+		  },
+		  grid: {
+		  	hoverable: true,
+		  	clickable: true
+		  }
+		})
+
+		function labelFormatter(label, series, data) {
+			return '<div style="font-size:13px; text-align:center; padding:2px; color: #fff; font-weight: 600;">'
+			  + label
+			  + '<br>'
+			  + Math.round(data)
+			  + '<br>'
+			  + Math.round(series.percent) + '%</div>'
+		  }
+	</script>
+
+{% endblock extrascripts%}
