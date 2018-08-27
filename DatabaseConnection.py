@@ -104,13 +104,13 @@ def exec_fetch_user_with_id(id):
 
 
 def exec_user_login(username, password):
-    sql = "SELECT user_id FROM users WHERE user_name='%s' AND user_password='%s'"
+    sql = "SELECT user_id, user_permission FROM users WHERE user_name='%s' AND user_password='%s'"
     database.exec_query(sql % (username, password))
-    userid = database.fetch_cursor()
-    if len(userid) == 0:
+    user = database.fetch_cursor()
+    if len(user) == 0:
         return None
     else:
-        return userid[0][0]
+        return user[0][0], user[0][1]
 
 # database.connect_database()
 # print(exec_user_login("wps","wps"))

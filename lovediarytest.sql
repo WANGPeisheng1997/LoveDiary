@@ -6,6 +6,7 @@ create table users
    user_id           int not null auto_increment,
    user_name         text not null,
    user_password     text not null,
+   user_permission   int not null,
    primary key (user_id)
 );
 
@@ -46,10 +47,10 @@ create table account
    foreign key (account_typeid) references account_type(type_id)
 );
 
-insert into users(user_name, user_password) values ("wps", "wps");
-insert into users(user_name, user_password) values ("gdm", "gdm");
-insert into users(user_name, user_password) values ("zyf", "zyf");
-insert into users(user_name, user_password) values ("fxt", "fxt");
+insert into users(user_name, user_password, user_permission) values ("wps", "gu", 1);
+insert into users(user_name, user_password, user_permission) values ("gdm", "gdm", 2);
+insert into users(user_name, user_password, user_permission) values ("zyf", "zyf", 2);
+insert into users(user_name, user_password, user_permission) values ("fxt", "gu", 1);
 
 insert into spender(spender_name) values ("WPS");
 insert into spender(spender_name) values ("Sweetie");

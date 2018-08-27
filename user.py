@@ -3,9 +3,10 @@ from DatabaseConnection import exec_fetch_user_with_id, database
 
 
 class User(UserMixin):
-    def __init__(self, username, id):
+    def __init__(self, username, id, permission):
         self.username = username
         self.id = id
+        self.permission = permission
 
 
     @staticmethod

@@ -38,14 +38,18 @@ def login():
             username = request.form['username']
             password = request.form['password']
             DatabaseConnection.database.connect_database()
-            userid = DatabaseConnection.exec_user_login(username, password)
+            userid, userpermission = DatabaseConnection.exec_user_login(username, password)
             DatabaseConnection.database.disconnect_database()
         else:
             userid = None
         if userid is not None:
-            login_user(User(id=userid, username=username))
-            flash('Logged in successfully.')
-            return redirect(url_for('index'))
+            if userpermission == 1:
+                login_user(User(id=userid, username=username))
+                flash('Logged in successfully.')
+                return redirect(url_for('index'))
+            else:
+                flash('Permission denied.')
+                return render_template('login.html')
         else:
             flash('Wrong username or password!')
             return render_template('login.html')
