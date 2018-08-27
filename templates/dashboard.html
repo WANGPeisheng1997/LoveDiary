@@ -139,26 +139,26 @@
 
 		};
 
-		window.onload = function() {
-			var ctx = document.getElementById('chart-area-pie').getContext('2d');
-			window.myDoughnut = new Chart(ctx, config);
 
-			var ctx = document.getElementById('chart-area-bar1').getContext('2d');
-			window.myBar = new Chart(ctx, {
-				type: 'bar',
-				data: barChartData,
-				options: {
-					responsive: true,
-					legend: {
-						position: 'top',
-					},
-					title: {
-						display: true,
-						text: 'Chart - Total cost of each month'
-					}
+		var ctx = document.getElementById('chart-area-pie').getContext('2d');
+		var myDoughnut = new Chart(ctx, config);
+
+		var ctx = document.getElementById('chart-area-bar1').getContext('2d');
+		var myBar = new Chart(ctx, {
+			type: 'bar',
+			data: barChartData,
+			options: {
+				responsive: true,
+				legend: {
+					position: 'top',
+				},
+				title: {
+					display: true,
+					text: 'Chart - Total cost of each month'
 				}
-			});
-		};
+			}
+		});
+
 	</script>
 
 {% endblock extrascripts%}
