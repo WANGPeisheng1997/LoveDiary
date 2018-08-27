@@ -68,7 +68,7 @@
 	<!-- Page script -->
 	<script>
 
-		window.chartColors = {
+		chartColors = {
 			red: 'rgb(255, 99, 132)',
 			orange: 'rgb(255, 159, 64)',
 			yellow: 'rgb(255, 205, 86)',
@@ -83,15 +83,15 @@
 				datasets: [{
 					data: {{ pie_data }},
 					backgroundColor: [
-						window.chartColors.red,
-						window.chartColors.orange,
-						window.chartColors.yellow,
-						window.chartColors.green,
-						window.chartColors.blue,
-						window.chartColors.blue,
-						window.chartColors.blue,
-						window.chartColors.blue,
-						window.chartColors.blue,
+						chartColors.red,
+						chartColors.orange,
+						chartColors.yellow,
+						chartColors.green,
+						chartColors.blue,
+						chartColors.blue,
+						chartColors.blue,
+						chartColors.blue,
+						chartColors.blue,
 					],
 				}],
 				labels: {{ pie_labels | tojson }}
@@ -118,20 +118,20 @@
 			labels: MONTHS,
 			datasets: [{
 				label: 'Wps',
-				backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
-				borderColor: window.chartColors.red,
+				backgroundColor: color(chartColors.red).alpha(0.5).rgbString(),
+				borderColor: chartColors.red,
 				borderWidth: 1,
 				data: {{ wpsdata }}
 			}, {
 				label: 'Sweetie',
-				backgroundColor: color(window.chartColors.blue).alpha(0.5).rgbString(),
-				borderColor: window.chartColors.blue,
+				backgroundColor: color(chartColors.blue).alpha(0.5).rgbString(),
+				borderColor: chartColors.blue,
 				borderWidth: 1,
 				data: {{ sweetiedata }}
 			}, {
 				label: 'Total',
-				backgroundColor: color(window.chartColors.green).alpha(0.5).rgbString(),
-				borderColor: window.chartColors.green,
+				backgroundColor: color(chartColors.green).alpha(0.5).rgbString(),
+				borderColor: chartColors.green,
 				borderWidth: 1,
 				data: {{ totaldata }}
 			}
