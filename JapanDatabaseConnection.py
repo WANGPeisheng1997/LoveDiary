@@ -7,7 +7,7 @@ class JapanConnection(object):
     def connect_database(self):
         self.connection = pymysql.connect(host=dbconfig.host,
                                           user=dbconfig.user,
-                                          db=dbconfig.japandb,
+                                          db="japantest",
                                           passwd=dbconfig.passwd,
                                           port=dbconfig.port,
                                           charset=dbconfig.charset
