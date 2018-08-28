@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 {% block title %}LoveDiary | Money Management{% endblock %}
 {% block contenttitle %} Money Management{% endblock %}
+
+{% block link_money_management %}
+	<li class="active">
+{% endblock %}
+
 {% block extralinks %}
 	<!-- daterange picker -->
 	<link rel="stylesheet" href="../static/bower_components/bootstrap-daterangepicker/daterangepicker.css">
@@ -36,7 +41,7 @@
 						  <th><span class="hidden-xs hidden-sm">Time</span><span class="visible-xs visible-sm">Time</span></th>
 						  <th><span class="hidden-xs hidden-sm">Description</span><span class="visible-xs visible-sm">Des.</span></th>
 						  <th><span class="hidden-xs hidden-sm">Cost</span><span class="visible-xs visible-sm">Cost</span></th>
-						  <th><span class="hidden-xs hidden-sm">Spender</span><span class="visible-xs visible-sm">Spd.</span</th>
+						  <th><span class="hidden-xs hidden-sm">Spender</span><span class="visible-xs visible-sm">Spd.</span></th>
 						  <th><span class="hidden-xs hidden-sm">Type</span><span class="visible-xs visible-sm">Type</span></th>
 						</tr>
 						</thead>
@@ -60,7 +65,7 @@
 						  <th><span class="hidden-xs hidden-sm">Time</span><span class="visible-xs visible-sm">Time</span></th>
 						  <th><span class="hidden-xs hidden-sm">Description</span><span class="visible-xs visible-sm">Des.</span></th>
 						  <th><span class="hidden-xs hidden-sm">Cost</span><span class="visible-xs visible-sm">Cost</span></th>
-						  <th><span class="hidden-xs hidden-sm">Spender</span><span class="visible-xs visible-sm">Spd.</span</th>
+						  <th><span class="hidden-xs hidden-sm">Spender</span><span class="visible-xs visible-sm">Spd.</span></th>
 						  <th><span class="hidden-xs hidden-sm">Type</span><span class="visible-xs visible-sm">Type</span></th>
 						</tr>
 						</tfoot>
