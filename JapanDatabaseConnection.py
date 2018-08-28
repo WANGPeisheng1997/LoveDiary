@@ -72,6 +72,25 @@ def exec_calculate_sum_for_each_type():
     return sum
 
 
+def exec_calculate_sum_for_each_date():
+    sql = "SELECT account_date, account_currency, SUM(account_cost) " \
+          "FROM account " \
+          "GROUP BY account_date, account_currency"
+    japan_database.exec_query(sql)
+    sum = japan_database.fetch_cursor()
+    return sum
+
+
+def exec_calculate_sum_for_each_person():
+    sql = "SELECT spender.spender_name, account.account_currency, SUM(account.account_cost) " \
+          "FROM account, spender " \
+          "WHERE account.account_spenderid=spender.spender_id " \
+          "GROUP BY account.account_spenderid, account.account_currency"
+    japan_database.exec_query(sql)
+    sum = japan_database.fetch_cursor()
+    return sum
+
+
 def exec_calculate_sum_for_specific_date_region_and_currency(date_control, currency):
     sql = "SELECT SUM(account_cost) " \
           "FROM account " \

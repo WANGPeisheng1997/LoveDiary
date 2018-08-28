@@ -1,0 +1,201 @@
+﻿{% extends "japan_base.html" %}
+{% block title %}Japan Helper | Statistics{% endblock %}
+{% block contenttitle %} Statistics{% endblock %}
+
+{% block extralinks %}
+	<!-- DataTables -->
+	<link rel="stylesheet" href="../static/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+{% endblock extralinks%}
+
+{% block link_statistics %}
+	<li class="active">
+{% endblock %}
+
+{% block content %}
+    <!-- Main content -->
+    <section class="content">
+
+		 <!-- Show total cost of each type -->
+		 <div class="row">
+		  <div class="col-lg-8">
+			  <div class="box box-solid box-danger">
+				<div class="box-header with-border">
+				  <h3 class="box-title">Total costs of each type</h3>
+				</div>
+				<!-- /.box-header -->
+				<div class="box-body">
+					<div class="table-responsive">
+					  <table id="account_table1" class="table table-bordered table-striped">
+						<thead>
+						<tr>
+						  <th><span class="hidden-xs hidden-sm">Type</span><span class="visible-xs visible-sm">Type</span></th>
+						  <th><span class="hidden-xs hidden-sm">CNY cost</span><span class="visible-xs visible-sm">CNY</span></th>
+						  <th><span class="hidden-xs hidden-sm">JPY cost</span><span class="visible-xs visible-sm">JPY</span></th>
+						  <th><span class="hidden-xs hidden-sm">JPY(ex.)</span><span class="visible-xs visible-sm">JPY(ex.)</span></th>
+						  <th><span class="hidden-xs hidden-sm">Total cost(ex.)</span><span class="visible-xs visible-sm">Total(ex.)</span></th>
+						</tr>
+						</thead>
+
+
+						<tbody>
+
+						{%for record in cost_type_list%}
+						<tr>
+							{%for item in record%}
+							<td>{{item}}</td>
+							{%endfor%}
+						</tr>
+						{%endfor%}
+
+						</tbody>
+
+						<tfoot>
+						<tr>
+						  <th><span class="hidden-xs hidden-sm">Type</span><span class="visible-xs visible-sm">Type</span></th>
+						  <th><span class="hidden-xs hidden-sm">CNY cost</span><span class="visible-xs visible-sm">CNY</span></th>
+						  <th><span class="hidden-xs hidden-sm">JPY cost</span><span class="visible-xs visible-sm">JPY</span></th>
+						  <th><span class="hidden-xs hidden-sm">JPY(ex.)</span><span class="visible-xs visible-sm">JPY(ex.)</span></th>
+						  <th><span class="hidden-xs hidden-sm">Total cost(ex.)</span><span class="visible-xs visible-sm">Total(ex.)</span></th>
+						</tr>
+						</tfoot>
+
+
+					  </table>
+					</div>
+				</div>
+				<!-- /.box-body -->
+			  </div>
+			  <!-- /.box -->
+		  </div>
+		 </div>
+
+		 <!-- Show total cost of each date -->
+		 <div class="row">
+		  <div class="col-lg-8">
+			  <div class="box box-solid box-danger">
+				<div class="box-header with-border">
+				  <h3 class="box-title">Total costs of each date</h3>
+				</div>
+				<!-- /.box-header -->
+				<div class="box-body">
+					<div class="table-responsive">
+					  <table id="account_table2" class="table table-bordered table-striped">
+						<thead>
+						<tr>
+						  <th><span class="hidden-xs hidden-sm">Date</span><span class="visible-xs visible-sm">Date</span></th>
+						  <th><span class="hidden-xs hidden-sm">CNY cost</span><span class="visible-xs visible-sm">CNY</span></th>
+						  <th><span class="hidden-xs hidden-sm">JPY cost</span><span class="visible-xs visible-sm">JPY</span></th>
+						  <th><span class="hidden-xs hidden-sm">JPY(ex.)</span><span class="visible-xs visible-sm">JPY(ex.)</span></th>
+						  <th><span class="hidden-xs hidden-sm">Total cost(ex.)</span><span class="visible-xs visible-sm">Total(ex.)</span></th>
+						</tr>
+						</thead>
+
+
+						<tbody>
+
+						{%for record in cost_date_list%}
+						<tr>
+							{%for item in record%}
+							<td>{{item}}</td>
+							{%endfor%}
+						</tr>
+						{%endfor%}
+
+						</tbody>
+
+						<tfoot>
+						<tr>
+						  <th><span class="hidden-xs hidden-sm">Date</span><span class="visible-xs visible-sm">Date</span></th>
+						  <th><span class="hidden-xs hidden-sm">CNY cost</span><span class="visible-xs visible-sm">CNY</span></th>
+						  <th><span class="hidden-xs hidden-sm">JPY cost</span><span class="visible-xs visible-sm">JPY</span></th>
+						  <th><span class="hidden-xs hidden-sm">JPY(ex.)</span><span class="visible-xs visible-sm">JPY(ex.)</span></th>
+						  <th><span class="hidden-xs hidden-sm">Total cost(ex.)</span><span class="visible-xs visible-sm">Total(ex.)</span></th>
+						</tr>
+						</tfoot>
+
+
+					  </table>
+					</div>
+				</div>
+				<!-- /.box-body -->
+			  </div>
+			  <!-- /.box -->
+		  </div>
+		 </div>
+
+		 <!-- Show total cost of each person -->
+		 <div class="row">
+		  <div class="col-lg-8">
+			  <div class="box box-solid box-danger">
+				<div class="box-header with-border">
+				  <h3 class="box-title">Total costs of each person</h3>
+				</div>
+				<!-- /.box-header -->
+				<div class="box-body">
+					<div class="table-responsive">
+					  <table id="account_table3" class="table table-bordered table-striped">
+						<thead>
+						<tr>
+						  <th><span class="hidden-xs hidden-sm">Name</span><span class="visible-xs visible-sm">Name</span></th>
+						  <th><span class="hidden-xs hidden-sm">CNY cost</span><span class="visible-xs visible-sm">CNY</span></th>
+						  <th><span class="hidden-xs hidden-sm">JPY cost</span><span class="visible-xs visible-sm">JPY</span></th>
+						  <th><span class="hidden-xs hidden-sm">JPY(ex.)</span><span class="visible-xs visible-sm">JPY(ex.)</span></th>
+						  <th><span class="hidden-xs hidden-sm">Total cost(ex.)</span><span class="visible-xs visible-sm">Total(ex.)</span></th>
+						</tr>
+						</thead>
+
+
+						<tbody>
+
+						{%for record in cost_person_list%}
+						<tr>
+							{%for item in record%}
+							<td>{{item}}</td>
+							{%endfor%}
+						</tr>
+						{%endfor%}
+
+						</tbody>
+
+						<tfoot>
+						<tr>
+						  <th><span class="hidden-xs hidden-sm">Name</span><span class="visible-xs visible-sm">Name</span></th>
+						  <th><span class="hidden-xs hidden-sm">CNY cost</span><span class="visible-xs visible-sm">CNY</span></th>
+						  <th><span class="hidden-xs hidden-sm">JPY cost</span><span class="visible-xs visible-sm">JPY</span></th>
+						  <th><span class="hidden-xs hidden-sm">JPY(ex.)</span><span class="visible-xs visible-sm">JPY(ex.)</span></th>
+						  <th><span class="hidden-xs hidden-sm">Total cost(ex.)</span><span class="visible-xs visible-sm">Total(ex.)</span></th>
+						</tr>
+						</tfoot>
+
+
+					  </table>
+					</div>
+				</div>
+				<!-- /.box-body -->
+			  </div>
+			  <!-- /.box -->
+		  </div>
+		 </div>
+    </section>
+    <!-- /.content -->
+{% endblock content%}
+
+{% block extrascripts %}
+	<!-- DataTables -->
+	<script src="../static/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+	<script src="../static/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+	<!-- SlimScroll -->
+	<script src="../static/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+	<!-- FastClick -->
+	<script src="../static/bower_components/fastclick/lib/fastclick.js"></script>
+	<!-- Page script -->
+	<script>
+		$(function () {
+			$('#account_table1').DataTable()
+			$('#account_table2').DataTable()
+			$('#account_table3').DataTable()
+		})
+	</script>
+
+{% endblock extrascripts%}
+

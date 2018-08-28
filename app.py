@@ -119,6 +119,7 @@ def japan_dashboard():
     JapanDatabaseConnection.japan_database.disconnect_database()
     return render_template('japan_dashboard.html', user=current_user.username, pie_data=pie_data, pie_labels=pie_labels, cnydata=cny, jpydata=jpy, totaldata=total)
 
+
 @app.route('/japan/accounting', methods=['GET'])
 @login_required
 def japan_accounting():
@@ -187,13 +188,57 @@ def japan_process_form_post(post_type=None):
     return redirect('/japan/accounting')
 
 
+@app.route('/japan/statistics', methods=['GET'])
+@login_required
+def japan_statistics():
+    JapanDatabaseConnection.japan_database.connect_database()
+    cost_type_list = japan_stats_of_each_type()
+    cost_date_list = japan_stats_of_each_date()
+    cost_person_list = japan_stats_of_each_person()
+    JapanDatabaseConnection.japan_database.disconnect_database()
+    return render_template('japan_statistics.html', user=current_user.username, cost_type_list=cost_type_list, cost_date_list=cost_date_list, cost_person_list=cost_person_list)
+
+
+def japan_stats_to_list(stats):
+    rate = JapanDatabaseConnection.exchange_rate
+    dict = {}
+    for col, currency, sum in stats:
+        if col not in dict:
+            dict[col] = {"CNY": 0.0, "JPY": 0.0, "JPYex": 0.0, "total": 0.0}
+        if currency == "CNY":
+            dict[col]["CNY"] = dict[col]["CNY"] + float(sum)
+            dict[col]["total"] = dict[col]["total"] + float(sum)
+        else:
+            dict[col]["JPY"] = dict[col]["JPY"] + float(sum)
+            dict[col]["JPYex"] = dict[col]["JPYex"] + float(sum) / rate
+            dict[col]["total"] = dict[col]["total"] + float(sum) / rate
+    list = []
+    for col in dict:
+        record = [col, '%.2f' % dict[col]["CNY"], '%.2f' % dict[col]["JPY"],
+                  '%.2f' % dict[col]["JPYex"], '%.2f' % dict[col]["total"]]
+        list.append(record)
+    return list
+
+
+def japan_stats_of_each_type():
+    stats = JapanDatabaseConnection.exec_calculate_sum_for_each_type()
+    return japan_stats_to_list(stats)
+
+
+def japan_stats_of_each_date():
+    stats = JapanDatabaseConnection.exec_calculate_sum_for_each_date()
+    return japan_stats_to_list(stats)
+
+
+def japan_stats_of_each_person():
+    stats = JapanDatabaseConnection.exec_calculate_sum_for_each_person()
+    return japan_stats_to_list(stats)
+
+
 @app.route('/japan/schedule', methods=['GET'])
 @login_required
 def japan_schedule():
     return render_template('japan_schedule.html')
-
-
-
 
 
 @app.route('/dashboard', methods=['GET'])
