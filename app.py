@@ -3,7 +3,7 @@
 import DatabaseConnection
 import JapanDatabaseConnection
 from flask import Flask, render_template, request, redirect, url_for, flash
-from flask_login import LoginManager, login_user, login_required, logout_user
+from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from datetime import datetime
 from user import User
 import time
@@ -16,13 +16,13 @@ app.secret_key = 'asfasfasfasqwerqwr'
 @app.route('/')
 @login_required
 def index():
-    return redirect('/moneymanagement')
+    return redirect('/japan/dashboard')
 
 # login routes and methods
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.session_protection = "strong"
-login_manager.login_view = "login"
+login_manager.login_view = "/japan/login"
 
 @login_manager.user_loader
 def load_user(userid):
@@ -71,10 +71,10 @@ def japan_login():
         if userid is not None:
             login_user(User(id=userid, username=username))
             flash('Logged in successfully.')
-            return redirect(url_for('japan_accounting'))
+            return redirect(url_for('japan_dashboard'))
         else:
             flash('Wrong username or password!')
-            return render_template('japan_login.html')
+            return redirect(url_for('japan_dashboard'))
 
 @app.route("/logout")
 @login_required
@@ -117,7 +117,7 @@ def japan_dashboard():
         total.append('%.2f' % (cnyt + jpyt / rate))
 
     JapanDatabaseConnection.japan_database.disconnect_database()
-    return render_template('japan_dashboard.html', pie_data=pie_data, pie_labels=pie_labels, cnydata=cny, jpydata=jpy, totaldata=total)
+    return render_template('japan_dashboard.html', user=current_user.username, pie_data=pie_data, pie_labels=pie_labels, cnydata=cny, jpydata=jpy, totaldata=total)
 
 @app.route('/japan/accounting', methods=['GET'])
 @login_required
@@ -127,7 +127,7 @@ def japan_accounting():
     types = JapanDatabaseConnection.exec_fetch_all_types()
     spenders = JapanDatabaseConnection.exec_fetch_all_spenders()
     JapanDatabaseConnection.japan_database.disconnect_database()
-    return render_template('japan_accounting.html', account_list=accounts, type_list=types, spender_list=spenders)
+    return render_template('japan_accounting.html', user=current_user.username, account_list=accounts, type_list=types, spender_list=spenders)
 
 
 @app.route('/japan/accounting/<post_type>', methods=['POST'])
