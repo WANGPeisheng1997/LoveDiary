@@ -1,8 +1,6 @@
-﻿{% extends "base.html" %}
-{% block title %}Japan Helper | Japan Accouting{% endblock %}
-{% block contenttitle %} Japan Accouting{% endblock %}
-{% block logomini %}<b>J</b>Hp{% endblock %}
-{% block logo %}<b>Japan</b>Helper{% endblock %}
+﻿{% extends "japan_base.html" %}
+{% block title %}Japan Helper | Japan Accounting{% endblock %}
+{% block contenttitle %} Japan Accounting{% endblock %}
 
 {% block extralinks %}
 	<!-- daterange picker -->
@@ -17,11 +15,8 @@
 	<link rel="stylesheet" href="../static/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
 {% endblock extralinks%}
 
-{% block sidebar %}
-	<li><a href="#"><i class="fa fa-link"></i> <span>Dashboard</span></a></li>
-	<li class="active"><a href="#"><i class="fa fa-link"></i> <span>Accounting</span></a></li>
-	<li><a href="#"><i class="fa fa-link"></i> <span>Schedule</span></a></li>
-	<li><a href="#"><i class="fa fa-link"></i> <span>Maps</span></a></li>
+{% block link_accounting %}
+	<li class="active">
 {% endblock %}
 
 {% block content %}
@@ -47,7 +42,7 @@
 						  <th><span class="hidden-xs hidden-sm">Description</span><span class="visible-xs visible-sm">Des.</span></th>
 						  <th><span class="hidden-xs hidden-sm">Currency</span><span class="visible-xs visible-sm">Cur.</span></th>
 						  <th><span class="hidden-xs hidden-sm">Cost</span><span class="visible-xs visible-sm">Cost</span></th>
-						  <th><span class="hidden-xs hidden-sm">Spender</span><span class="visible-xs visible-sm">Spd.</span</th>
+						  <th><span class="hidden-xs hidden-sm">Spender</span><span class="visible-xs visible-sm">Spd.</span></th>
 						  <th><span class="hidden-xs hidden-sm">Type</span><span class="visible-xs visible-sm">Type</span></th>
 						</tr>
 						</thead>
@@ -73,7 +68,7 @@
 						  <th><span class="hidden-xs hidden-sm">Description</span><span class="visible-xs visible-sm">Des.</span></th>
 						  <th><span class="hidden-xs hidden-sm">Currency</span><span class="visible-xs visible-sm">Cur.</span></th>
 						  <th><span class="hidden-xs hidden-sm">Cost</span><span class="visible-xs visible-sm">Cost</span></th>
-						  <th><span class="hidden-xs hidden-sm">Spender</span><span class="visible-xs visible-sm">Spd.</span</th>
+						  <th><span class="hidden-xs hidden-sm">Spender</span><span class="visible-xs visible-sm">Spd.</span></th>
 						  <th><span class="hidden-xs hidden-sm">Type</span><span class="visible-xs visible-sm">Type</span></th>
 						</tr>
 						</tfoot>

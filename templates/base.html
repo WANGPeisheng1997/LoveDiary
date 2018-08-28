@@ -130,12 +130,10 @@
 		  <ul class="sidebar-menu" data-widget="tree">
 			<li class="header">Main</li>
 			<!-- Optionally, you can add icons to the links -->
-			{% block sidebar %}
-			<li><a href="/dashboard"><i class="fa fa-link"></i> <span>Dashboard</span></a></li>
-			<li><a href="#"><i class="fa fa-link"></i> <span>Diary</span></a></li>
-			<li><a href="#"><i class="fa fa-link"></i> <span>Calendar</span></a></li>
-			<li class="active"><a href="/moneymanagement"><i class="fa fa-link"></i> <span>Money Management</span></a></li>
-			{% endblock %}
+			{% block link_dashboard %}<li>{% endblock %}<a href="/dashboard"><i class="fa fa-link"></i> <span>Dashboard</span></a></li>
+			{% block link_diary %}<li>{% endblock %}<a href="#"><i class="fa fa-link"></i> <span>Diary</span></a></li>
+			{% block link_calendar %}<li>{% endblock %}<a href="#"><i class="fa fa-link"></i> <span>Calendar</span></a></li>
+			{% block link_money_management %}<li>{% endblock %}<a href="/moneymanagement"><i class="fa fa-link"></i> <span>Money Management</span></a></li>
 		  </ul>
 		  <!-- /.sidebar-menu -->
 		</section>
