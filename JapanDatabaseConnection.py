@@ -2,6 +2,7 @@
 import pymysql
 import dbconfig
 
+exchange_rate = 16.31
 
 class JapanConnection(object):
     def connect_database(self):
@@ -59,6 +60,27 @@ def exec_fetch_all_accounts():
     japan_database.exec_query(sql)
     accounts = japan_database.fetch_cursor()
     return accounts
+
+
+def exec_calculate_sum_for_each_type():
+    sql = "SELECT account_type.type_name, account.account_currency, SUM(account.account_cost) " \
+          "FROM account, account_type " \
+          "WHERE account.account_typeid=account_type.type_id " \
+          "GROUP BY account.account_typeid, account.account_currency"
+    japan_database.exec_query(sql)
+    sum = japan_database.fetch_cursor()
+    return sum
+
+
+def exec_calculate_sum_for_specific_date_region_and_currency(date_control, currency):
+    sql = "SELECT SUM(account_cost) " \
+          "FROM account " \
+          "WHERE account_currency = '%s' AND account_date " + date_control
+    japan_database.exec_query(sql % currency)
+    sum = japan_database.fetch_cursor()[0][0]
+    if sum is None:
+        return 0
+    return sum
 
 
 def exec_fetch_all_types():

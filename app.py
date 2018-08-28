@@ -58,7 +58,7 @@ def login():
 @app.route('/japan/login', methods=['GET', 'POST'])
 def japan_login():
     if request.method == 'GET':
-        return render_template('japanlogin.html')
+        return render_template('japan_login.html')
     if request.method == 'POST':
         if "username" in request.form and "password" in request.form:
             username = request.form['username']
@@ -74,7 +74,7 @@ def japan_login():
             return redirect(url_for('japan_accounting'))
         else:
             flash('Wrong username or password!')
-            return render_template('japanlogin.html')
+            return render_template('japan_login.html')
 
 @app.route("/logout")
 @login_required
@@ -84,6 +84,41 @@ def logout():
 
 
 # routes for japan
+@app.route('/japan/dashboard', methods=['GET'])
+@login_required
+def japan_dashboard():
+    JapanDatabaseConnection.japan_database.connect_database()
+    pie_data = []
+    pie_labels = []
+    pydata = JapanDatabaseConnection.exec_calculate_sum_for_each_type() # (type_name, currency, cost)
+    rate = JapanDatabaseConnection.exchange_rate
+    dict = {}
+    for type_name, currency, sum in pydata:
+        if type_name not in dict:
+            dict[type_name] = 0
+        if currency == "CNY":
+            dict[type_name] = dict[type_name] + float(sum)
+        else:
+            dict[type_name] = dict[type_name] + float(sum) / rate
+    for type_name in dict:
+        pie_data.append('%.2f' % dict[type_name])
+        pie_labels.append(type_name)
+
+    cny = []
+    jpy = []
+    total = []
+    date_controls = ["< '2018-08-29'", "= '2018-08-29'", "= '2018-08-30'", "= '2018-08-31'", "= '2018-09-01'",
+                     "= '2018-09-02'", "= '2018-09-03'", "= '2018-09-04'", "> '2018-09-04'"]
+    for date_control in date_controls:
+        cnyt = float(JapanDatabaseConnection.exec_calculate_sum_for_specific_date_region_and_currency(date_control, 'CNY'))
+        cny.append(cnyt)
+        jpyt = float(JapanDatabaseConnection.exec_calculate_sum_for_specific_date_region_and_currency(date_control, 'JPY'))
+        jpy.append('%.2f' % (jpyt / rate))
+        total.append('%.2f' % (cnyt + jpyt / rate))
+
+    JapanDatabaseConnection.japan_database.disconnect_database()
+    return render_template('japan_dashboard.html', pie_data=pie_data, pie_labels=pie_labels, cnydata=cny, jpydata=jpy, totaldata=total)
+
 @app.route('/japan/accounting', methods=['GET'])
 @login_required
 def japan_accounting():
@@ -158,10 +193,7 @@ def japan_schedule():
     return render_template('japan_schedule.html')
 
 
-@app.route('/japan/maps', methods=['GET'])
-@login_required
-def japan_maps():
-    return render_template('japan_maps.html')
+
 
 
 @app.route('/dashboard', methods=['GET'])
